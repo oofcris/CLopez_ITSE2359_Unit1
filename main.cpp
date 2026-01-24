@@ -15,7 +15,7 @@ int main()
     if (!infile)
     {
         cout << "File could not be open" << endl;
-        return 0;
+    
     }
 
     int count = 0;
