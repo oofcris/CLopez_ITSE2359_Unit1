@@ -1,3 +1,11 @@
+// Cristian Lopez//
+// Week 2 project//
+// A program that brings the data into 3 parallel arrays//
+
+
+
+
+
 #include <iostream>
 #include <fstream>
 #include <string>
