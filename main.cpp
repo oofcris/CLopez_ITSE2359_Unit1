@@ -1,88 +1,55 @@
-// Cristian Lopez//
-// Week 2 project//
-// A program that brings the data into 3 parallel arrays//
-
-
-
-
-
 #include <iostream>
-#include <fstream>
-#include <string>
 using namespace std;
-
-int main()
-{
-    const int size = 55;
-
-    string names[size];
-    int ages[size];
-    double gpa[size];
-
-    ifstream infile("student_data.txt");
-    if (!infile)
-    {
-        cout << "File could not be open" << endl;
+ 
+int main() {
+    int choice;
+    bool keepRunning = true;
     
-    }
-
-    int count = 0;
-
-    for (int i = 0; i < size; i++)
-    {
-        if (infile >> names[i] >> ages[i] >> gpa[i])
-        {
-            count++;
+    // Main menu loop
+    do {
+        // Display menu
+        cout << "\n=== GAMESTAT CHARACTER MANAGER ===" << endl;
+        cout << "1. Create New Character" << endl;
+        cout << "2. View Character Stats" << endl;
+        cout << "3. Calculate Combat Ratings" << endl;
+        cout << "4. Level Up Character" << endl;
+        cout << "5. Exit" << endl;
+        cout << "Enter choice: ";
+        cin >> choice;
+        
+        // Process menu choice
+        switch (choice) {
+            case 1:
+                cout << "\n[Create Character - Coming Soon]" << endl;
+                // Your code here
+                break;
+                
+            case 2:
+                cout << "\n[View Stats - Coming Soon]" << endl;
+                // Your code here
+                break;
+                
+            case 3:
+                cout << "\n[Calculate Ratings - Coming Soon]" << endl;
+                // Your code here
+                break;
+                
+            case 4:
+                cout << "\n[Level Up - Coming Soon]" << endl;
+                // Your code here
+                break;
+                
+            case 5:
+                cout << "\nThanks for using GameStat! Goodbye!" << endl;
+                keepRunning = false;
+                break;
+                
+            default:
+                cout << "\nInvalid choice! Please enter 1-5." << endl;
+                break;
         }
-    }
-    infile.close();
-
-    double avg = 0;
-    for (int i = 0; i < count; i++)
-    {
-        avg += gpa[i];
-    }
-    cout << "Average GPA: " << avg / count << endl;
-
-    double highgpa = gpa[0];
-    for (int i = 1; i < count; i++)
-    {
-        if (gpa[i] > highgpa)
-            highgpa = gpa[i];
-    }
-
-    cout << "Highest GPA: " << highgpa << endl;
-    cout << "Students with the highest GPA:" << endl;
-    for (int i = 0; i < count; i++)
-    {
-        if (gpa[i] == highgpa)
-            cout << names[i] << endl;
-    }
-
-    int oldest = ages[0];
-    int youngest = ages[0];
-
-    for (int i = 1; i < count; i++)
-    {
-        if (ages[i] > oldest)
-            oldest = ages[i];
-        if (ages[i] < youngest)
-            youngest = ages[i];
-    }
-
-    cout << "Oldest students:" << endl;
-    for (int i = 0; i < count; i++)
-    {
-        if (ages[i] == oldest)
-            cout << names[i] << endl;
-    }
-
-    cout << "Youngest students:" << endl;
-    for (int i = 0; i < count; i++)
-    {
-        if (ages[i] == youngest)
-            cout << names[i] << endl;
-    }
-
+        
+    } while (keepRunning);
+    
     return 0;
 }
