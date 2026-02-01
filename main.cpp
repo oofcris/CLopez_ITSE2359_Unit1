@@ -1,5 +1,5 @@
 #include <iostream>
-#include <string>
+#include <iomanip>
 using namespace std;
 
 int main()
@@ -7,11 +7,14 @@ int main()
     int choice;
     bool keepRunning = true;
 
-    // Character data
-    string name;
-    int charClass; // 1-Warrior, 2-Mage, 3-Rogue, 4-Cleric
-    int strength, intelligence, dexterity, constitution;
+    string name, charClass;
+    int level = 1;
+    int str = 0, intl = 0, dex = 0, con = 0;
     bool characterCreated = false;
+
+    int hp = 0, mp = 0;
+    double attack = 0;
+    int defense = 0;
 
     do
     {
@@ -24,71 +27,177 @@ int main()
         cout << "Enter choice: ";
         cin >> choice;
 
+        if (cin.fail())
+        {
+            cin.clear();
+            cin.ignore(10000, '\n');
+            cout << "\nInvalid input!\n";
+            continue;
+        }
+
         switch (choice)
         {
 
-        // ================= CREATE CHARACTER =================
         case 1:
+        {
             cout << "\nEnter Character Name: ";
-            cin.ignore();
-            getline(cin, name);
+            cin >> name;
 
-            cout << "\nChoose Character Class:" << endl;
-            cout << "1. Warrior" << endl;
-            cout << "2. Mage" << endl;
-            cout << "3. Rogue" << endl;
-            cout << "4. Cleric" << endl;
-            cout << "Enter choice: ";
-            cin >> charClass;
+            cout << "Choose Class (1-Warrior 2-Mage 3-Rogue 4-Cleric): ";
+            int classChoice;
+            cin >> classChoice;
 
-            // Class bonuses
-            switch (charClass)
+            switch (classChoice)
             {
-            case 1: // Warrior
-                strength += 2;
-                constitution += 2;
+            case 1:
+                charClass = "Warrior";
                 break;
-            case 2: // Mage
-                intelligence += 3;
+            case 2:
+                charClass = "Mage";
                 break;
-            case 3: // Rogue
-                dexterity += 3;
+            case 3:
+                charClass = "Rogue";
                 break;
-            case 4: // Cleric
-                intelligence += 1;
-                constitution += 2;
+            case 4:
+                charClass = "Cleric";
                 break;
             default:
-                cout << "Invalid class selected. No bonuses applied.\n";
+                cout << "Invalid class selection." << endl;
+                break;
+            }
+
+            while (str < 1 || str > 20)
+            {
+                cout << "Enter Strength (1-20): ";
+                cin >> str;
+            }
+            while (intl < 1 || intl > 20)
+            {
+                cout << "Enter Intelligence (1-20): ";
+                cin >> intl;
+            }
+            while (dex < 1 || dex > 20)
+            {
+                cout << "Enter Dexterity (1-20): ";
+                cin >> dex;
+            }
+            while (con < 1 || con > 20)
+            {
+                cout << "Enter Constitution (1-20): ";
+                cin >> con;
+            }
+
+            // Class bonuses
+            switch (classChoice)
+            {
+            case 1:
+                str += 2;
+                break; // Warrior
+            case 2:
+                intl += 2;
+                break; // Mage
+            case 3:
+                dex += 2;
+                break; // Rogue
+            case 4:
+                con += 2;
+                break; // Cleric
             }
 
             characterCreated = true;
-            cout << "\nCharacter created successfully!" << endl;
+            cout << "\nCharacter Created Successfully!" << endl;
             break;
+        }
 
-        // ================= VIEW STATS =================
+        // Stats
         case 2:
             if (!characterCreated)
             {
-                cout << "\nNo character created yet!" << endl;
+                cout << "\nCreate a character first!" << endl;
+                break;
             }
-            else
-            {
-                cout << "\n=== CHARACTER STATS ===" << endl;
-                cout << "Name: " << name << endl;
-                cout << "Strength: " << strength << endl;
-                cout << "Intelligence: " << intelligence << endl;
-                cout << "Dexterity: " << dexterity << endl;
-                cout << "Constitution: " << constitution << endl;
-            }
+
+            cout << "\n=== CHARACTER PROFILE ===" << endl;
+            cout << "Name: " << name << endl;
+            cout << "Class: " << charClass << endl;
+            cout << "Level: " << level << endl;
+
+            cout << "\nBase Stats:" << endl;
+            cout << "  Strength:     " << str << endl;
+            cout << "  Intelligence: " << intl << endl;
+            cout << "  Dexterity:    " << dex << endl;
+            cout << "  Constitution: " << con << endl;
+
+            cout << "\nCombat Stats:" << endl;
+            cout << "  Health Points: " << hp << endl;
+            cout << "  Mana Points:   " << mp << endl;
+            cout << "  Attack Power:  " << attack << endl;
+            cout << "  Defense:       " << defense << endl;
             break;
 
         case 3:
-            cout << "\n[Calculate Ratings - Coming Soon]" << endl;
+            if (!characterCreated)
+            {
+                cout << "\nCreate a character first!" << endl;
+                break;
+            }
+
+            // Hp and Mp
+            hp = (con * 10) + (level * 5);
+            mp = (intl * 10) + (level * 3);
+
+            // Class bonuses
+            if (charClass == "Warrior")
+                hp += 20;
+            if (charClass == "Mage")
+                mp += 30;
+
+            // Attack Power of the classes
+            if (charClass == "Warrior")
+                attack = str * 1.5;
+            else if (charClass == "Mage")
+                attack = intl * 1.3;
+            else if (charClass == "Rogue")
+                attack = dex * 1.4;
+            else if (charClass == "Cleric")
+                attack = (str + intl) * 0.8;
+
+            // Defense of the character
+            defense = (con + dex) / 2;
+
+            cout << "\nCombat Ratings Calculated!" << endl;
             break;
 
         case 4:
-            cout << "\n[Level Up - Coming Soon]" << endl;
+            if (!characterCreated)
+            {
+                cout << "\nCreate a character first!" << endl;
+                break;
+            }
+
+            if (level >= 10)
+            {
+                cout << "\nMax level reached!" << endl;
+                break;
+            }
+
+            cout << "\n LEVEL UP " << endl;
+            cout << "Before Level: " << level << endl;
+
+            level++;
+            str++;
+            intl++;
+            dex++;
+            con++;
+
+            cout << "After Level: " << level << endl;
+
+            // Recalculate stats
+            hp = (con * 10) + (level * 5);
+            mp = (intl * 10) + (level * 3);
+            defense = (con + dex) / 2;
+
+            cout << "Stats updated!" << endl;
             break;
 
         case 5:
