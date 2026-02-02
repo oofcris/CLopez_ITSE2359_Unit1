@@ -87,7 +87,6 @@ int main()
                 cin >> con;
             }
 
-            // Class bonuses
             switch (classChoice)
             {
             case 1:
