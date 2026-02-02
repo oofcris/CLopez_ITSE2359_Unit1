@@ -1,3 +1,12 @@
+// Cristian Lopez
+// Assignment- Week 3 Gamestat console app
+// This program is a basic console where the player can create and look at their character
+
+
+
+
+
+
 #include <iostream>
 #include <iomanip>
 using namespace std;
