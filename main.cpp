@@ -1,11 +1,6 @@
 // Cristian Lopez
-// Assignment- Week 3 Gamestat console app
+// Assignment- Week 4 Gamestat console app Final submission
 // This program is a basic console where the player can create and look at their character
-
-
-
-
-
 
 #include <iostream>
 #include <iomanip>
@@ -24,6 +19,9 @@ int main()
     int hp = 0, mp = 0;
     double attack = 0;
     int defense = 0;
+
+    int stats[4] = {str, intl, dex, con};
+    string statNames[4] = {"Strength", "Intelligence", "Dexterity", "Constitution"};
 
     do
     {
@@ -75,41 +73,29 @@ int main()
                 break;
             }
 
-            while (str < 1 || str > 20)
+            for (int i = 0; i < 4; ++i)
             {
-                cout << "Enter Strength (1-20): ";
-                cin >> str;
-            }
-            while (intl < 1 || intl > 20)
-            {
-                cout << "Enter Intelligence (1-20): ";
-                cin >> intl;
-            }
-            while (dex < 1 || dex > 20)
-            {
-                cout << "Enter Dexterity (1-20): ";
-                cin >> dex;
-            }
-            while (con < 1 || con > 20)
-            {
-                cout << "Enter Constitution (1-20): ";
-                cin >> con;
+                while (stats[i] < 1 || stats[i] > 20)
+                {
+                    cout << "Enter " << statNames[i] << " (1-20): ";
+                    cin >> stats[i];
+                }
             }
 
             switch (classChoice)
             {
             case 1:
-                str += 2;
-                break; // Warrior
+                stats[0] += 2; // Warrior
+                break;
             case 2:
-                intl += 2;
-                break; // Mage
+                stats[1] += 2; // Mage
+                break;
             case 3:
-                dex += 2;
-                break; // Rogue
+                stats[2] += 2; // Rogue
+                break;
             case 4:
-                con += 2;
-                break; // Cleric
+                stats[3] += 2; // Cleric
+                break;
             }
 
             characterCreated = true;
@@ -131,10 +117,10 @@ int main()
             cout << "Level: " << level << endl;
 
             cout << "\nBase Stats:" << endl;
-            cout << "  Strength:     " << str << endl;
-            cout << "  Intelligence: " << intl << endl;
-            cout << "  Dexterity:    " << dex << endl;
-            cout << "  Constitution: " << con << endl;
+            for (int i = 0; i < 4; ++i)
+            {
+                cout << "  " << statNames[i] << ": " << stats[i] << endl;
+            }
 
             cout << "\nCombat Stats:" << endl;
             cout << "  Health Points: " << hp << endl;
@@ -151,8 +137,8 @@ int main()
             }
 
             // Hp and Mp
-            hp = (con * 10) + (level * 5);
-            mp = (intl * 10) + (level * 3);
+            hp = (stats[3] * 10) + (level * 5);
+            mp = (stats[1] * 10) + (level * 3);
 
             // Class bonuses
             if (charClass == "Warrior")
@@ -160,18 +146,18 @@ int main()
             if (charClass == "Mage")
                 mp += 30;
 
-            // Attack Power of the classes
+            // Attack power of the classes
             if (charClass == "Warrior")
-                attack = str * 1.5;
+                attack = stats[0] * 1.5;
             else if (charClass == "Mage")
-                attack = intl * 1.3;
+                attack = stats[1] * 1.3;
             else if (charClass == "Rogue")
-                attack = dex * 1.4;
+                attack = stats[2] * 1.4;
             else if (charClass == "Cleric")
-                attack = (str + intl) * 0.8;
+                attack = (stats[0] + stats[1]) * 0.8;
 
             // Defense of the character
-            defense = (con + dex) / 2;
+            defense = (stats[3] + stats[2]) / 2;
 
             cout << "\nCombat Ratings Calculated!" << endl;
             break;
@@ -189,21 +175,22 @@ int main()
                 break;
             }
 
-            cout << "\n LEVEL UP " << endl;
+            cout << "\nLEVEL UP" << endl;
             cout << "Before Level: " << level << endl;
 
             level++;
-            str++;
-            intl++;
-            dex++;
-            con++;
+
+            for (int i = 0; i < 4; ++i)
+            {
+                stats[i]++;
+            }
 
             cout << "After Level: " << level << endl;
 
             // Recalculate stats
-            hp = (con * 10) + (level * 5);
-            mp = (intl * 10) + (level * 3);
-            defense = (con + dex) / 2;
+            hp = (stats[3] * 10) + (level * 5);
+            mp = (stats[1] * 10) + (level * 3);
+            defense = (stats[3] + stats[2]) / 2;
 
             cout << "Stats updated!" << endl;
             break;
